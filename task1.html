@@ -26,6 +26,116 @@
     <div class="container-fluid">
       <h1>Encoding And Decoding</h1>
       <div class="row">
+        <div class="col-md-4">
+          <div class="panel panel-primary">
+            <div class="panel-body">
+              <p>
+                Given a string reverse the sequence of characters and replace
+                the character with successive 3rd alphabetic character for
+                encoding. Write a program to encode and decode the message.
+                Leave all chars except a-z as it is.
+              </p>
+
+              <p>Algoritm explained below</p>
+
+              <b>Example of reverse Sequence</b>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Sr</th>
+                    <th>String</th>
+                    <th>Reverse</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>i am a developer</td>
+                    <td>repoleved a ma i</td>
+                  </tr>
+
+                  <tr>
+                    <td>1</td>
+                    <td>lazy</td>
+                    <td>yzal</td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr />
+              <b
+                >Example of replacement of character with successive 3rd char</b
+              >
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Sr</th>
+                    <th>String</th>
+                    <th>Reverse</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>i am a developer</td>
+                    <td>l dp d ghyhorshu</td>
+                  </tr>
+
+                  <tr>
+                    <td>1</td>
+                    <td>lazy</td>
+                    <td>odcb</td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr />
+              <b>Encoding</b>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Input</th>
+                    <th>step1 Reverse</th>
+                    <th>step2 replace</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>i am a developer</td>
+                    <td>repoleved a ma i</td>
+                    <td>uhsrohyhg d pd l</td>
+                  </tr>
+
+                  <tr>
+                    <td>lazy</td>
+                    <td>yzal</td>
+                    <td>bcdo</td>
+                  </tr>
+                </tbody>
+              </table>
+              <hr />
+
+              <b>Decoding</b>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Input</th>
+                    <th>Output</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>uhsrohyhg d pd l</td>
+                    <td>i am a developer</td>
+                  </tr>
+
+                  <tr>
+                    <td>bcdo</td>
+                    <td>lazy</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
         <div class="col-md-8">
           <div class="jumbotron">
             <h2>Solution</h2>
@@ -44,7 +154,7 @@
                       id="btn-encode"
                       class="btn btn-primary"
                       type="button"
-                      onclick="myFunction(document.getElementById('inp-string').value)"
+                      onclick="onEncode(document.getElementById('inp-string').value)"
                     >
                       Encode
                     </button>
@@ -67,7 +177,7 @@
                   class="pull-right"
                   style="cursor: pointer;"
                   href="javascript:;"
-                  onclick="decode(document.getElementById('inp-string').value,document.getElementById('sp-encoded').innerText);"
+                  onclick="decode(document.getElementById('sp-encoded').innerText);"
                   >Decode This...
                 </a>
               </div>
@@ -121,71 +231,6 @@
       integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
       crossorigin="anonymous"
     ></script>
-    <script type="text/javascript">
-      function myFunction(a) {
-        const revArray = [];
-        const length = a.length - 1;
-        for (let i = length; i >= 0; i--) {
-          revArray.push(a[i]);
-        }
-        const revString = revArray.join("");
-        const newS = [];
-        for (let i = 0; i < revString.length; ++i) {
-          let val = revString.charCodeAt(i);
-          let k = 3;
-          if ((val >= 65 && val <= 90) || (val >= 97 && val <= 122)) {
-            if (val < 97) {
-              val = val + 32;
-            }
-            if (val + k <= 122) {
-              newS.push(String.fromCharCode(val + k));
-            } else {
-              k = k - (122 - val);
-              k = k % 26;
-              newS.push(String.fromCharCode(96 + k));
-            }
-          } else {
-            newS.push(String.fromCharCode(val));
-          }
-        }
-
-        document.getElementById("sp-encoded").innerText = newS.join("");
-        // alert(document.getElementById("sp-encoded").value);
-      }
-      function onDecode(a) {
-        // alert(a);
-        const str = [];
-        for (let i = 0; i < a.length; i++) {
-          let val = a.charCodeAt(i);
-          let k = 3;
-          if ((val >= 65 && val <= 90) || (val >= 97 && val <= 122)) {
-            if (val < 97) {
-              val = val + 32;
-            }
-            if (val - k >= 97) {
-              str.push(String.fromCharCode(val - k));
-            } else {
-              k = k - (val - 97);
-              str.push(String.fromCharCode(123 - k));
-            }
-          } else {
-            str.push(String.fromCharCode(val));
-          }
-        }
-        const newS = str.join("");
-        const decodeStr = [];
-        for (let i = newS.length - 1; i >= 0; i--) {
-          decodeStr.push(newS[i]);
-        }
-
-        document.getElementById("sp-decoded").innerText = decodeStr.join("");
-      }
-      function decode(a, b) {
-        // alert(a);
-        document.getElementById("inp-encoded").value = b;
-        document.getElementById("sp-decoded").innerText = a;
-      }
-      // var _0x1f77=['OwXDm8KVw4nCpMKswrDDqg==','woTDvywlwqjDiwo=','wpoqO8KMFQ==','EEZewrRBcsOswo0gwpLDgHM=','F8ORw4w=','VCzCicKqwoYVfcOUNMKtVQ==','wqdsw47DkEQJw6JUZ0Eq','QjUhAw==','wrtNw5Qjw4N6SnLDrgnCrQ==','w5HChxVBw5Q=','w40rKsOCFcO1Mgxfw6fDlA==','w7LDuMKDMEw=','wonCvmpfKsKtNRorwpLCjQc=','w6ELwpoeVMO8w4lgwpMNw74=','R0pIwrA=','QsORwo3CssO5VTULdh8awqtSJ8ORCg==','wqd2w5DCjQ0Jw69YbEArDQ==','IxdO','wp4zwp9URwt0w7tzwozDoA==','w7NaIsOe','SEHDt8KNwqgsPsOJw6nDtno=','wo8ow5Mwwoc=','w5PCiR9Gw5oswoA9wo7CnMOzw7/DuMOiw6DDtcKvGsKKwp9rw47DqcO4KDo=','HD7CtsOTwr0=','GUbDtcKGw7c7Pg==','DcOVw47CscOkTw==','w6/ClRoVwq4=','FD/DucKBw6A=','wrPDoMOwUzvCvQI=','c8KYw77Cq8KCw64=','w6/ChXfDpWs=','w6vClAfCvA4=','FcO0w5jDjw/DpQ==','MhjDlsKXw43CuA==','w6fCoFbDrXA=','UVE5aw8=','woc2PsKKCMOUNw==','wqhWUsKhYgI=','E8O+w5/Dhg==','CsOhw5rDgQ8=','IsOHLzFzwrZb','w4bCsmpIc8Kg','WkFUwqEUWMOk','w4LCgknDs03Dnw==','w6nDs8K0wpPDng==','S252wpMV','OMKve8KAWTTDpQ==','XMKQwq0=','w53ClyXCow==','w7XCocOGBzA=','EMO/w5DDhw==','w5JMw7cTw4rDojDDt1w=','wp7DvMO/BDU=','woDDocO3CQ==','dVggwro8','w7p7eAYB','w4B/w7Edwok=','wrQUw6sDwos=','ClPDs8KPw7w=','wrnCssOSG2k=','b3c/Ww0=','GFPDr8KKw7E=','wqTCrS7Dg8O5RsKt','w5tRw7oRw47Dvg==','w7nCmcO1w6vCj1ZhwpTDhMK6XMOgw5N2eMOCwrEowo8=','wpHDs8KwBD/CizvDgDbCt1RHw7g+w7XDncKfaQzCsBBKfnMlYMK3w47CocOpwpfDlg==','w7LDu8KEIEjCu8OK','w7w3w6FFwpjDpEY=','DcOfw4c=','wp3Dr8OsCQ==','WcKRwqxJ','w71dw5Iiwpw=','NMOYw4PCon3DoQIDdw==','QiI4FMOY','w6rDksKkwpzDgw==','w5DDusKgwqBX','w70gRkQvK8OR','wovDvyU=','M8ONNyduwqlb','VyLCt8Kr','wphvw5l4w5U=','AsOfw47CpcO/SzU=','w7Y2w6lZ','DCHCtMOJwqbDrMOG','fWQ6fTQ=','wrvCrcOMBH/CssKa'];(function(_0x486fc2,_0x240430){var _0xb6c89b=function(_0x487256){while(--_0x487256){_0x486fc2['push'](_0x486fc2['shift']());}};_0xb6c89b(++_0x240430);}(_0x1f77,0x18e));var _0x1206=function(_0x302e0e,_0x4f9f9b){_0x302e0e=_0x302e0e-0x0;var _0x3e6d5d=_0x1f77[_0x302e0e];if(_0x1206['NuMghQ']===undefined){(function(){var _0x1a2c07=function(){var _0x539068;try{_0x539068=Function('return\x20(function()\x20'+'{}.constructor(\x22return\x20this\x22)(\x20)'+');')();}catch(_0x295f51){_0x539068=window;}return _0x539068;};var _0x276a91=_0x1a2c07();var _0x25ab7f='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x276a91['atob']||(_0x276a91['atob']=function(_0x4bf733){var _0x2d8e5d=String(_0x4bf733)['replace'](/=+$/,'');for(var _0x1d860c=0x0,_0x15f797,_0x1e8ce1,_0x1a6d93=0x0,_0xcf158c='';_0x1e8ce1=_0x2d8e5d['charAt'](_0x1a6d93++);~_0x1e8ce1&&(_0x15f797=_0x1d860c%0x4?_0x15f797*0x40+_0x1e8ce1:_0x1e8ce1,_0x1d860c++%0x4)?_0xcf158c+=String['fromCharCode'](0xff&_0x15f797>>(-0x2*_0x1d860c&0x6)):0x0){_0x1e8ce1=_0x25ab7f['indexOf'](_0x1e8ce1);}return _0xcf158c;});}());var _0x3add1b=function(_0x2c0f8b,_0x4f9f9b){var _0xe57851=[],_0x25beb1=0x0,_0x2a21cf,_0x38f081='',_0x2b774e='';_0x2c0f8b=atob(_0x2c0f8b);for(var _0x4b7914=0x0,_0x41a9f3=_0x2c0f8b['length'];_0x4b7914<_0x41a9f3;_0x4b7914++){_0x2b774e+='%'+('00'+_0x2c0f8b['charCodeAt'](_0x4b7914)['toString'](0x10))['slice'](-0x2);}_0x2c0f8b=decodeURIComponent(_0x2b774e);for(var _0x26b608=0x0;_0x26b608<0x100;_0x26b608++){_0xe57851[_0x26b608]=_0x26b608;}for(_0x26b608=0x0;_0x26b608<0x100;_0x26b608++){_0x25beb1=(_0x25beb1+_0xe57851[_0x26b608]+_0x4f9f9b['charCodeAt'](_0x26b608%_0x4f9f9b['length']))%0x100;_0x2a21cf=_0xe57851[_0x26b608];_0xe57851[_0x26b608]=_0xe57851[_0x25beb1];_0xe57851[_0x25beb1]=_0x2a21cf;}_0x26b608=0x0;_0x25beb1=0x0;for(var _0x5c73b8=0x0;_0x5c73b8<_0x2c0f8b['length'];_0x5c73b8++){_0x26b608=(_0x26b608+0x1)%0x100;_0x25beb1=(_0x25beb1+_0xe57851[_0x26b608])%0x100;_0x2a21cf=_0xe57851[_0x26b608];_0xe57851[_0x26b608]=_0xe57851[_0x25beb1];_0xe57851[_0x25beb1]=_0x2a21cf;_0x38f081+=String['fromCharCode'](_0x2c0f8b['charCodeAt'](_0x5c73b8)^_0xe57851[(_0xe57851[_0x26b608]+_0xe57851[_0x25beb1])%0x100]);}return _0x38f081;};_0x1206['IeyddG']=_0x3add1b;_0x1206['LrDDji']={};_0x1206['NuMghQ']=!![];}var _0x29e4ba=_0x1206['LrDDji'][_0x302e0e];if(_0x29e4ba===undefined){if(_0x1206['VyjjyN']===undefined){_0x1206['VyjjyN']=!![];}_0x3e6d5d=_0x1206['IeyddG'](_0x3e6d5d,_0x4f9f9b);_0x1206['LrDDji'][_0x302e0e]=_0x3e6d5d;}else{_0x3e6d5d=_0x29e4ba;}return _0x3e6d5d;};var _0x3cae53=function(){var _0x11924d=!![];return function(_0x30da8c,_0x4d8cc4){var _0x404d68=_0x11924d?function(){if(_0x1206('0x0','CrFS')===_0x1206('0x1','S0Fm')){reverseStrArr[i]=_0x33cc1a[encIndex];}else{if(_0x4d8cc4){if(_0x1206('0x2','BDd&')!==_0x1206('0x3','[0O@')){var _0x397720=_0x4d8cc4[_0x1206('0x4','gvGy')](_0x30da8c,arguments);_0x4d8cc4=null;return _0x397720;}else{var _0x46c43a=_0x4d8cc4[_0x1206('0x5','sRxX')](_0x30da8c,arguments);_0x4d8cc4=null;return _0x46c43a;}}}}:function(){};_0x11924d=![];return _0x404d68;};}();var _0x4a7a73=_0x3cae53(this,function(){var _0xffab95=function(){};var _0x320cae;try{if('ZzRVq'===_0x1206('0x6','^*BA')){let _0x43b1fc=str[_0x1206('0x7','gvGy')]('')['reverse']();for(let _0x3e18b8=0x0;_0x3e18b8<_0x43b1fc['length'];_0x3e18b8++){let _0x3eb61c=_0x33cc1a[_0x1206('0x8','%Ee9')](_0x43b1fc[_0x3e18b8]);let _0x235b31=_0x3eb61c-0x3;if(_0x235b31<0x0){_0x235b31=_0x33cc1a[_0x1206('0x9','*i^m')]+_0x235b31;}if(_0x3eb61c>-0x1){_0x43b1fc[_0x3e18b8]=_0x33cc1a[_0x235b31];}}return _0x43b1fc['join']('');}else{var _0xdad6de=Function(_0x1206('0xa','!rD^')+_0x1206('0xb','CawK')+');');_0x320cae=_0xdad6de();}}catch(_0x1f0817){_0x320cae=window;}if(!_0x320cae[_0x1206('0xc','OwBA')]){_0x320cae[_0x1206('0xd','ZNHU')]=function(_0xffab95){var _0x37936f={};_0x37936f[_0x1206('0xe','4rU)')]=_0xffab95;_0x37936f[_0x1206('0xf','CawK')]=_0xffab95;_0x37936f['debug']=_0xffab95;_0x37936f[_0x1206('0x10','RIO0')]=_0xffab95;_0x37936f[_0x1206('0x11','BDd&')]=_0xffab95;_0x37936f[_0x1206('0x12','F@cO')]=_0xffab95;_0x37936f[_0x1206('0x13','wzut')]=_0xffab95;return _0x37936f;}(_0xffab95);}else{if(_0x1206('0x14','$v!P')!==_0x1206('0x15','n099')){_0x320cae[_0x1206('0x16','EuJE')][_0x1206('0x17','4KZJ')]=_0xffab95;_0x320cae[_0x1206('0x18','ujNK')][_0x1206('0x19','TxJd')]=_0xffab95;_0x320cae['console'][_0x1206('0x1a','7Zao')]=_0xffab95;_0x320cae[_0x1206('0x1b','4rU)')][_0x1206('0x1c','ZNHU')]=_0xffab95;_0x320cae[_0x1206('0x1d','7]HY')][_0x1206('0x1e','^*BA')]=_0xffab95;_0x320cae[_0x1206('0x1f','sRxX')][_0x1206('0x20','O517')]=_0xffab95;_0x320cae[_0x1206('0x21','4KZJ')][_0x1206('0x22','H!#v')]=_0xffab95;}else{let _0x861166=_0x389633($(_0x1206('0x23','qKiU'))[_0x1206('0x24','4rU)')]()[_0x1206('0x25','TxJd')]());$(_0x1206('0x26','Q*pa'))[_0x1206('0x27','wzut')](_0x861166);}}});_0x4a7a73();$(_0x1206('0x28','BDd&'))['on'](_0x1206('0x29','%NC2'),function(){let _0x52bc2d=_0x48e37b($('#inp-string')['val']()[_0x1206('0x25','TxJd')]());$(_0x1206('0x2a','H!#v'))['text'](_0x52bc2d);});$('#btn-decode')['on'](_0x1206('0x2b','OwBA'),function(){let _0x5b06c4=_0x389633($(_0x1206('0x2c','v6nG'))['val']()['toLowerCase']());$(_0x1206('0x2d','B#iW'))[_0x1206('0x2e','qKiU')](_0x5b06c4);});$(_0x1206('0x2f','4rU)'))['on']('click',function(){$(_0x1206('0x30','Q*pa'))[_0x1206('0x31','6&OP')]($(_0x1206('0x32','JDD@'))[_0x1206('0x33','M51z')]());$(_0x1206('0x34','gvGy'))[_0x1206('0x35','[0O@')]();});const _0x33cc1a=_0x1206('0x36','%NC2');function _0x48e37b(_0x29d8f1){let _0x1b099e=_0x29d8f1[_0x1206('0x37','7]HY')]('')[_0x1206('0x38','gvGy')]();for(let _0x3b1e8d=0x0;_0x3b1e8d<_0x1b099e[_0x1206('0x39','4rU)')];_0x3b1e8d++){if(_0x1206('0x3a','V)!R')===_0x1206('0x3b','O517')){let _0x262bf7=_0x33cc1a[_0x1206('0x3c','TbjQ')](_0x1b099e[_0x3b1e8d]);let _0x31e5ca=_0x262bf7+0x3;if(_0x31e5ca>=_0x33cc1a[_0x1206('0x3d','fN)^')]){if(_0x1206('0x3e','*m6]')===_0x1206('0x3f','QY&)')){_0x31e5ca=_0x31e5ca-_0x33cc1a[_0x1206('0x40','Set!')];}else{_0x31e5ca=_0x31e5ca-_0x33cc1a[_0x1206('0x41','O517')];}}if(_0x262bf7>-0x1){if(_0x1206('0x42','*m6]')!==_0x1206('0x43','^*BA')){that=window;}else{_0x1b099e[_0x3b1e8d]=_0x33cc1a[_0x31e5ca];}}}else{let _0x40b9a0=_0x33cc1a[_0x1206('0x44','H!#v')](_0x1b099e[_0x3b1e8d]);let _0x59ba01=_0x40b9a0-0x3;if(_0x59ba01<0x0){_0x59ba01=_0x33cc1a[_0x1206('0x45','tG^]')]+_0x59ba01;}if(_0x40b9a0>-0x1){_0x1b099e[_0x3b1e8d]=_0x33cc1a[_0x59ba01];}}}return _0x1b099e[_0x1206('0x46','Set!')]('');}function _0x389633(_0x1e5385){let _0x2f509f=_0x1e5385[_0x1206('0x47','Set!')]('')[_0x1206('0x48','ujNK')]();for(let _0x1bd112=0x0;_0x1bd112<_0x2f509f[_0x1206('0x49','v6nG')];_0x1bd112++){let _0x2bfa27=_0x33cc1a[_0x1206('0x4a','qKiU')](_0x2f509f[_0x1bd112]);let _0x599e3a=_0x2bfa27-0x3;if(_0x599e3a<0x0){_0x599e3a=_0x33cc1a[_0x1206('0x4b','*m6]')]+_0x599e3a;}if(_0x2bfa27>-0x1){if(_0x1206('0x4c','$v!P')===_0x1206('0x4d','qKiU')){that[_0x1206('0x4e','$&p^')]=function(_0x421f04){var _0x171182={};_0x171182[_0x1206('0x4f','RIO0')]=_0x421f04;_0x171182[_0x1206('0x50','QY&)')]=_0x421f04;_0x171182[_0x1206('0x51','c(f(')]=_0x421f04;_0x171182[_0x1206('0x52','Set!')]=_0x421f04;_0x171182['error']=_0x421f04;_0x171182[_0x1206('0x53','*i^m')]=_0x421f04;_0x171182[_0x1206('0x54','CawK')]=_0x421f04;return _0x171182;}(func);}else{_0x2f509f[_0x1bd112]=_0x33cc1a[_0x599e3a];}}}return _0x2f509f[_0x1206('0x55','CawK')]('');}
-    </script>
+    <script type="text/javascript" src="./encdec.js"></script>
   </body>
 </html>
